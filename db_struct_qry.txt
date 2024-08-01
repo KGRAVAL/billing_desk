@@ -1,0 +1,79 @@
+db_table_name = ['user_table','category','product','billing', 'issue']
+for  x in db_table_name:
+	self.create_table(table_name = x,)
+
+----------------------------------------------------------------------------------------------------
+billing
+----------------------------------------------------------------------------------------------------
+CREATE TABLE `billing` (
+  `bill_id` int NOT NULL AUTO_INCREMENT,
+  `total_products` varchar(200) DEFAULT NULL,
+  `bill_amount` float DEFAULT NULL,
+  `payment_mode` varchar(45) DEFAULT NULL,
+  `payment_status` varchar(20) DEFAULT NULL,
+  `user_id` int DEFAULT NULL,
+  PRIMARY KEY (`bill_id`),
+  KEY `user_id_idx` (`user_id`),
+  CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `user_table` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+----------------------------------------------------------------------------------------------------
+category
+----------------------------------------------------------------------------------------------------
+
+CREATE TABLE `category` (
+  `cate_id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  PRIMARY KEY (`cate_id`),
+  UNIQUE KEY `cate_id_UNIQUE` (`cate_id`),
+  UNIQUE KEY `name_UNIQUE` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+----------------------------------------------------------------------------------------------------
+issue
+----------------------------------------------------------------------------------------------------
+
+CREATE TABLE `issue` (
+  `query_id` int NOT NULL AUTO_INCREMENT,
+  `description` varchar(70) NOT NULL,
+  `issue_generator` int DEFAULT NULL,
+  PRIMARY KEY (`query_id`),
+  KEY `issue_generatot_idx` (`issue_generator`),
+  CONSTRAINT `issue_generatot` FOREIGN KEY (`issue_generator`) REFERENCES `user_table` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+----------------------------------------------------------------------------------------------------
+product
+----------------------------------------------------------------------------------------------------
+
+CREATE TABLE `product` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(60) NOT NULL,
+  `description` varchar(100) NOT NULL,
+  `manufacture` varchar(30) NOT NULL,
+  `price` varchar(20) NOT NULL,
+  `base_quentity` varchar(20) NOT NULL,
+  `category` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `category_idx` (`category`),
+  CONSTRAINT `category` FOREIGN KEY (`category`) REFERENCES `category` (`cate_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+----------------------------------------------------------------------------------------------------
+user_table
+----------------------------------------------------------------------------------------------------
+
+CREATE TABLE `user_table` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `user_name` varchar(20) NOT NULL,
+  `name` varchar(45) NOT NULL,
+  `password` varchar(45) NOT NULL,
+  `gender` tinyint NOT NULL,
+  `dob` datetime NOT NULL,
+  `city` varchar(45) DEFAULT NULL,
+  `date_joining` datetime NOT NULL,
+  `is_admin` tinyint DEFAULT '0',
+  `is_aproved` tinyint DEFAULT '0',
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `user_id_UNIQUE` (`user_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
